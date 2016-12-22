@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+		body{
+			background: url(2.jpg) no-repeat;
+		}
+			#content{
+				position:absolute;
+				width: 250px;
+				height: 150px;
+				/*background: darkgoldenrod;*/
+				border-radius: 20px;
+				top:40%;
+				left:40%;
+				transition:0.2s;
+				border: 20px solid green;
+				background: url(timg.jpg) no-repeat;
+				background-size:250px 150px;
+			}
+			#div1{
+				width: 250px;
+				height: 30px;
+				background:darkgreen;
+				border-radius: 10px;
+				position: absolute;
+				top: 50%;
+				left:50%;
+				margin-top:-15px;
+			}
+			#div2{
+				width: 50px;
+				height: 50px;
+				position: absolute;
+				background:darkolivegreen;
+				border-radius:50%;
+				top: 50%;
+				left:50%;
+				margin:-25px 0 0 -25px;
+			}
+			.ball{
+				width: 40px;
+				height: 20px;
+				border-radius: 50%;
+				background:green;
+				position: absolute;
+				top:65px ;
+				left:350px ;
+			}
+			#div3,#div4{
+				position: absolute;
+				width:80px;
+				height: 80px;
+				background:url(3.jpg) no-repeat -19px -30px;
+				background-size:134px 120px;
+				border-radius:50%;
+				top:160px;
+			}
+			#div3{
+				left:0;
+			}
+			#div4{
+				right: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<div id="div1"></div>
+			<div id="div2"></div>
+			<div id="div3"></div>
+			<div id="div4"></div>
+		</div>
+		<script type="text/javascript">
+			var box=document.getElementById('content');
+			var ball=document.getElementById('ball');
+			var div3=document.getElementById('div3');
+			var div4=document.getElementById('div4')
+			var arr=[];
+			var ball;
+			var timer;
+			var timer2;
+			var onoff=true;
+			var flags=true;
+			document.onkeydown=function(e){//键盘按下
+				arr[e.keyCode]=true;
+				flags=true;
+				if(onoff){
+					go();
+					onoff=false;
+				}
+				if(e.keyCode==13){
+					if(flags){
+						fly();
+						flags=false;
+					}
+				}
+			}
+			document.onkeyup=function(e){//键盘抬起
+				arr[e.keyCode]=false;
+				for(var i=0;i<arr.length;i++){
+					if(arr[i]){
+						return;
+					}
+				}
+				clearInterval(timer);
+				onoff=true;
+			}
+			function fly(){//让子弹飞
+					creatBall();
+					timer2=setInterval(function(){
+						console.log(2)
+						ball.style.left=ball.offsetLeft+10+'px';
+						ball.style.transform='scale(2)'
+					},10)
+					setTimeout(function(){
+						box.removeChild(ball)
+						clearInterval(timer2);
+						flags=true;
+					},300)
+			}
+			function creatBall(){//生成子弹
+				ball=document.createElement('div');
+				ball.className='ball';
+				box.appendChild(ball);
+			}
+			function go(){//坦克移动
+				timer=setInterval(function(){
+					if(arr[37]){
+						box.style.transform='rotate(-180deg)';
+						box.style.left=box.offsetLeft-20+'px';
+						div3.style.top=-90+'px';
+						div4.style.top=-90+'px';
+					}
+					if(arr[38]){
+						box.style.transform='rotate(-90deg)'
+						box.style.top=box.offsetTop-20+'px';
+					}
+					if(arr[39]){
+						box.style.transform='rotate(0deg)'
+						box.style.left=box.offsetLeft+20+'px';
+						div3.style.top=160+'px';
+						div4.style.top=160+'px';
+					}
+					if(arr[40]){
+						box.style.transform='rotate(-270deg)'
+						box.style.top=box.offsetTop+20+'px';
+					}
+				},1)
+			}
+			
+		</script>
+	</body>
+</html>

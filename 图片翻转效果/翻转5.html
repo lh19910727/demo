@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body{
+				background: darkcyan;
+				
+			}
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#content{
+				width: 300px;
+				height:300px;
+				margin:100px auto 0;
+				position: relative;
+				transform-style:preserve-3d;
+				perspective:500px;
+				overflow: hidden;
+				backface-visibility: hidden;
+			}
+			#content div{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				
+			}
+			#content div img{
+				position: absolute;
+				opacity:1;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<div>1<img src="img/0.jpg" alt="" /></div>
+			<!--<div>2<img src="img/1.jpg" alt="" /></div>
+			<div>3<img src="img/2.jpg" alt="" /></div>
+			<div>4<img src="img/3.jpg" alt="" /></div>
+			<div>5<img src="img/4.jpg" alt="" /></div>
+			<div>6<img src="img/5.jpg" alt="" /></div>-->
+			
+		</div>
+		<script type="text/javascript">
+			var content=document.getElementById('content');
+			var divs=content.getElementsByTagName('div')[0];
+			var oImg=divs.getElementsByTagName('img')[0];
+			var arr=['img/0.jpg','img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg','img/6.jpg'];
+			var num=0;
+			content.onmousewheel=function(e){
+				num++;
+				num%=arr.length;
+				if(e.wheelDelta<0){
+					divs.style.transform='translateZ(400px)';
+					divs.style.opacity='0'
+					divs.style.transition='0.8s'
+				}
+				setTimeout(function(){
+					divs.style.opacity='1'
+					divs.style.transform='translateZ(0px)'
+					oImg.src=arr[num]
+				},300)
+			}
+		</script>
+	</body>
+</html>

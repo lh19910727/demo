@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图片堆叠效果</title>
+		<style type="text/css">
+		html{
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			width:100%;
+		}
+		body{
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			background:url(img/0.jpg) no-repeat;
+			background-size: 100% 100%;
+		}
+		h1{
+			width: 600px;
+			text-align: center;
+			margin:30px auto;
+			padding: 0;
+			color: #fff;
+		}
+		h3{
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			font-size: 30px;
+			font-family:"bodoni mt";
+		}
+		h1 span{
+			display: block;
+			color:blueviolet;
+		}
+			#_list{
+				margin:50px auto 0;
+				padding: 0;
+				list-style: none;
+				width: 350px;
+				height:400px;
+				border: 1px solid black;
+				position: relative;
+			}
+			#_list li{
+				position: absolute;
+				width:350px;
+				height:400px;
+				background: #fff;
+				line-height:50px;
+				
+				
+			}
+			li img{
+				vertical-align: top;
+				width:350px;
+				height:350px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>图片堆叠效果
+			<span>可拖动并且非常具有弹性图片展示效果</span>
+		</h1>
+		<ul id="_list">	
+			<li>
+				<img src="img/0.jpg" alt="" />
+				<h3>Saudade</h3>
+			</li>
+			<li>
+				<img src="img/1.jpg" alt="" />
+				<h3>Tuqburni</h3>
+			</li>
+			<li>
+				<img src="img/2.jpg" />
+				<h3>Retrouvailles</h3>
+			</li>
+			<li>
+				<img src="img/3.jpg"/>
+				<h3>Onsra</h3>
+			</li>
+			<li>
+				<img src="img/4.jpg"/>
+				<h3>Mamihlapinatapai</h3>
+			</li>
+			<li>
+				<img src="img/5.jpg"/>
+				<h3>>Koi No Yokan</h3>
+			</li>
+			
+		</ul>
+		<audio src="../图片旋转轮播/music.mp3" autoplay="autoplay" loop="loop"></audio>
+		<script type="text/javascript">
+			var _list=document.getElementById('_list');
+			var _lis=_list.getElementsByTagName('li');
+			var isdrag=true;
+			var elem=document.createDocumentFragment();
+			fn();
+			function fn(){
+				 _lis[ _lis.length-1].onmousedown=function(e){
+					for(var i=0;i< _lis.length;i++){
+						 _lis[i].style.transition='none';
+					}
+					var listL=_list.getBoundingClientRect().left;
+					var listT=_list.getBoundingClientRect().top;
+					var disX=e.clientX-listL-_lis[_lis.length-1].offsetLeft;
+					var disY=e.clientY-listT-_lis[_lis.length-1].offsetTop;
+					var dir='';
+					var Left;
+					var Top;
+					e.cancelBubble=true;
+					function fn1(){
+						for(var i=3;i<_lis.length;i++){
+								_lis[i].style.transition='1s';
+								_lis[i].style.transition='1s cubic-bezier(0.175, 0.885, 0.470, 1.515)';
+							}
+							_lis[_lis.length-3].style.left='0';
+							_lis[_lis.length-2].style.left='0';
+							_lis[_lis.length-3].style.top='0';
+							_lis[_lis.length-2].style.top='0';
+					}
+					document.onmousemove=function(e){
+						Left=e.clientX-disX-listL;
+						Top=e.clientY-disY-listT;
+						_lis[_lis.length-1].style.left=Left+'px';
+						_lis[_lis.length-2].style.left=Left/2+'px';
+						_lis[_lis.length-3].style.left=Left/4+'px';
+						_lis[_lis.length-1].style.top=Top+'px';
+						_lis[_lis.length-2].style.top=Top/2+'px';
+						_lis[_lis.length-3].style.top=Top/4+'px';
+						if(Left>400||Top>300||Left<-290||Top<-320){
+							fn1();
+							_lis[_lis.length-1].style.opacity='0';
+						}
+					}
+					document.onmouseup=function(){
+						document.onmousemove=null;
+						document.onmouseup=null;
+						fn1();
+						_lis[_lis.length-1].style.left='0';
+						_lis[_lis.length-1].style.top='0';
+						_lis[_lis.length-1].style.opacity='1';
+						_list.insertBefore(_lis[_lis.length-1],_lis[0]);
+						fn();
+					}
+					
+					return false
+				}
+			}
+					
+		</script>
+	</body>
+</html>

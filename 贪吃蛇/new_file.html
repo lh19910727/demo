@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box{
+				width: 400px;
+				height: 400px;
+				border: 2px solid black;
+				margin: 30px auto;
+				position: relative;
+				
+			}
+			#content{
+				width: 400px;
+				height: 400px;
+				border: 2px solid black;
+				position:absolute;
+				top: 0;
+				left: 0;
+			}
+			.food{
+				width: 38px;
+				height: 38px;
+				background: red;
+				position: absolute;
+				border:1px solid white;
+			}
+			#content div{
+				width: 38px;
+				height: 38px;
+				background: red;
+				position: absolute;
+				border:1px solid white;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" name="btn" id="btn" value="游戏开始" />
+		<div id="box">
+			<div id="content"></div>
+		</div>
+		<script type="text/javascript">
+			var content=document.getElementById('content');
+			var btn=document.getElementById('btn');
+			var food;
+			var str='';
+			var onoff=true;
+			var num=0;
+			var foodLeft=0;
+			var foodTop=0;
+			var timer=null;
+			var arr=[[40,0],[80,0],[120,0],[160,0]];
+			var keycode=0;
+			btn.onclick = function(){
+				onoff=true;
+				console.log(onoff)
+				if(onoff){
+					creatSnake();
+					function creatSnake(){//生成蛇
+						str='';
+						for(var i=0;i<arr.length;i++){
+							str+='<div style="left:'+arr[i][0]+'px;top:'+arr[i][1]+'px"></div>'
+						}
+						content.innerHTML=str;
+					}
+					
+					
+					function stop(){
+						for(var i=0;i<arr.length-1;i++){
+							if(arr[arr.length-1][0]==arr[i][0]&&arr[arr.length-1][1]==arr[i][1]){
+								clearInterval(timer)
+								alert('游戏失败')
+								onoff=false;
+								console.log(onoff)
+								return
+							}
+						}
+					}
+					function moveR(){//向右动
+						if(keycode==39){
+							arr.shift();
+							arr.push([arr[arr.length-1][0]+40,arr[arr.length-1][1]]);
+							if(arr[arr.length-1][0]==foodLeft&&arr[arr.length-1][1]==foodTop){
+								box.removeChild(food);
+								arr.push([arr[arr.length-1][0]+40,arr[arr.length-1][1]])
+								creatFood();
+							}
+							
+							if(arr[arr.length-1][0]==400){
+								clearInterval(timer)
+								alert('游戏失败')
+								onoff=false;
+								console.log(onoff)
+								return
+							}
+							stop();
+							creatSnake();
+						}
+							
+					}
+					function moveD(){//向下动
+						if(keycode==40){
+							arr.shift();
+							arr.push([arr[arr.length-1][0],arr[arr.length-1][1]+40]);
+							if(arr[arr.length-1][0]==foodLeft&&arr[arr.length-1][1]==foodTop){
+								box.removeChild(food);
+								arr.push([arr[arr.length-1][0],arr[arr.length-1][1]+40])
+								creatFood();
+							}
+							if(arr[arr.length-1][1]==400){
+								clearInterval(timer)
+								alert('游戏失败')
+								onoff=false;
+								console.log(onoff)
+								return
+							}
+							stop();
+							creatSnake();
+						}
+							
+							
+					}
+					function moveL(){//向左动
+						if(keycode==37){
+							arr.shift();
+							arr.push([arr[arr.length-1][0]-40,arr[arr.length-1][1]]);
+							if(arr[arr.length-1][0]==foodLeft&&arr[arr.length-1][1]==foodTop){
+								box.removeChild(food);
+								arr.push([arr[arr.length-1][0]-40,arr[arr.length-1][1]])
+								creatFood();
+							}
+							if(arr[arr.length-1][0]==-40){
+								clearInterval(timer)
+								alert('游戏失败')
+								onoff=false;
+								console.log(onoff)
+								return
+							}
+							stop();
+							creatSnake();
+						}
+							
+						
+					}
+					function moveU(){//向上动
+						if(keycode==38){
+							arr.shift();
+							arr.push([arr[arr.length-1][0],arr[arr.length-1][1]-40]);
+							if(arr[arr.length-1][0]==foodLeft&&arr[arr.length-1][1]==foodTop){
+								box.removeChild(food);
+								arr.push([arr[arr.length-1][0],arr[arr.length-1][1]-40])
+								creatFood();
+							}
+							if(arr[arr.length-1][1]==-40){
+								clearInterval(timer)
+								alert('游戏失败')
+								onoff=false;
+								console.log(onoff)
+								return
+							}
+							stop();
+							creatSnake();
+						}
+							
+							
+					}
+					function creatFood(){//生成食物
+						foodLeft=Math.floor(Math.random()*10)*40;
+						foodTop=Math.floor(Math.random()*10)*40;
+						food=document.createElement('div');
+						food.className='food';
+						food.style.left=foodLeft+'px';
+						food.style.top=foodTop+'px';
+						box.appendChild(food);
+						for(var i=0;i<arr.length;i++){
+							if(foodLeft==arr[i][0]&&foodTop==arr[i][1]){
+								box.removeChild(food)
+								creatFood()
+							}
+						}
+						
+						
+						
+					}
+					creatFood();
+					
+					document.onkeyup=function(ev){
+						switch (ev.keyCode){
+							case 37:
+							if(keycode!=39){
+								clearInterval(timer)
+								timer=setInterval(moveL,400)
+							}
+							keycode=37;
+							break;
+							case 38:
+							if(keycode!=40){
+								clearInterval(timer)
+								timer=setInterval(moveU,400)
+							}
+							keycode=38;
+							break;
+							case 39:
+							if(keycode!=37){
+								clearInterval(timer)
+								timer=setInterval(moveR,400)
+							}
+							keycode=39;
+							break;
+							case 40:
+							if(keycode!=38){
+								clearInterval(timer)
+								timer=setInterval(moveD,400)
+							}
+							keycode=40;
+							break;
+							
+						}
+					}
+				}
+			}
+			
+				
+				
+			
+			
+			
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html{
+				width: 100%;
+				height: 100%;
+			}
+			body{
+				
+				width: 100%;
+				height: 100%;
+				background: url(img/6.jpg) no-repeat;
+				background-size: 100% 100%;
+			}
+			#_box{
+				width: 900px;
+				height:300px;
+				background:darkcyan;
+				margin: 100px auto;
+				position: relative;
+			}
+			#_box .divs{
+				border: 2px solid #fff;
+				position: absolute;
+				transition:1s;
+			}
+			#_box div img{
+				width: 100%;
+				height: 100%;
+			}
+			#_btn1{
+				position: absolute;
+				left: 20px;
+				top:75px;
+				width: 230px;
+				height:150px;
+				z-index:1;
+			}
+			#_btn2{
+				position: absolute;
+				left:655px;
+				top:75px;
+				width: 230px;
+				height:150px;
+				z-index:1;
+			}
+			.divs p{
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				height: 20px;
+				width: 100%;
+				line-height: 20px;
+				font-size: 14px;
+				background: pink;
+				display: none;
+			}
+			p.show{
+				display:block;
+				}
+		</style>
+	</head>
+	<body>
+		<div id="_box">
+			<!--<div>
+				<a href="#"><img src="img/0.jpg"/></a>
+				<h5>
+					<p>
+						 This is some information that can go along with an image.
+	                        Anything can be placed here, including images.
+					</p>
+				</h5>
+			</div>-->
+			<div id="_btn1"></div>
+			<div id="_btn2"></div>
+		</div>
+		<script type="text/javascript">
+			var _box=document.getElementById('_box');
+			var _btn1=document.getElementById('_btn1');
+			var _btn2=document.getElementById('_btn2');
+			var arr=[
+			{
+				left:'225px',
+				top:'20px',
+				width:'450px',
+				height:'260px',
+				opacity:'1',
+				zIndex:'2',
+				className:'show'
+			},
+			{
+				left:'20px',
+				top:'75px',
+				width:'230px',
+				height:'150px',
+				opacity:'0.7',
+				zIndex:'0',
+				className:''
+			},
+			{
+				left:'335px',
+				top:'75px',
+				width:'230px',
+				height:'150px',
+				opacity:'0.7',
+				zIndex:'0',
+				className:''
+			},
+			
+			{
+				left:'655px',
+				top:'75px',
+				width:'230px',
+				height:'150px',
+				opacity:'0.7',
+				zIndex:'0',
+				className:''
+			}
+			]
+			for(var i=0;i<arr.length;i++){
+				creatDiv(i)
+			}
+			
+			function creatDiv(n){
+					var div =document.createElement('div');
+					div.innerHTML='<a href="#"><img src="img/'+n+'.jpg"/></a><h5><p> This is some information that can go along with an image.</p></h5>'
+					div.className='divs';
+					_box.appendChild(div);
+			}
+			var divs=_box.getElementsByClassName('divs');
+			var ps=_box.getElementsByTagName('p');
+			function moveDiv(){
+				for(var i=0;i<arr.length;i++){
+					divs[i].style.left=arr[i].left;
+					divs[i].style.top=arr[i].top;
+					divs[i].style.width=arr[i].width;
+					divs[i].style.height=arr[i].height;
+					divs[i].style.opacity=arr[i].opacity;
+					divs[i].style.zIndex=arr[i].zIndex;
+				}
+			}
+			 moveDiv();
+			 function fnR(){
+			 	for(var i=0;i<arr.length;i++){
+					ps[i].className='';
+				}
+				var a=arr.shift();
+				arr.push(a);
+				moveDiv();
+				setTimeout(function(){
+					for(var i=0;i<arr.length;i++){
+						ps[i].className=arr[i].className;
+					}
+				},1000)
+			 }
+			 function fnL(){
+			 	for(var i=0;i<arr.length;i++){
+					ps[i].className='';
+				}
+				var b=arr.pop();
+				arr.unshift(b);
+				moveDiv();
+				setTimeout(function(){
+					for(var i=0;i<arr.length;i++){
+						ps[i].className=arr[i].className;
+					}
+				},1000)
+			 }
+			_btn2.onclick=function(){
+				fnR()
+			}
+			_btn1.onclick=function(){
+				fnL()
+			}
+			document.onkeydown=function(e){
+				if(e.keyCode==39){
+					fnL()
+				}else if(e.keyCode==37){
+					fnR()
+				}
+			}
+		</script>
+	</body>
+</html>

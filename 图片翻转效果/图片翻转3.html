@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			
+			body{
+				background: darkcyan;
+				
+			}
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#content{
+				width: 250px;
+				height:250px;
+				margin:250px auto 0;
+				position: relative;
+				transform-style:preserve-3d;
+				/*perspective:800px;*/
+				transform-origin: center;
+			}
+			#content div{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+			}
+			#content div:nth-of-type(1){
+				top:0;
+				left: 0;
+				
+			}
+			#content div:nth-of-type(2){
+				top:-250px;
+				left: 0;
+				transform:rotateX(90deg);
+				transform-origin: bottom;
+			}
+			#content div:nth-of-type(3){
+				top:250px;
+				left: 0;
+				transform:rotateX(-90deg);
+				transform-origin:top;
+			}
+			#content div:nth-of-type(4){
+				top:0;
+				left:-250px;
+				transform:rotateY(-90deg);
+				transform-origin:right;
+			}
+			#content div:nth-of-type(5){
+				top:0;
+				left:250px;
+				transform-origin:left;
+				transform:rotateY(90deg);
+			}
+			#content div:nth-of-type(6){
+				top:0;
+				left:0;
+				transform:translateZ(-250px);
+			}
+			#content div img{
+				position: absolute;
+				opacity: 0.9;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<div>1<img src="img/0.jpg" alt="" /></div>
+			<div>2<img src="img/1.jpg" alt="" /></div>
+			<div>3<img src="img/2.jpg" alt="" /></div>
+			<div>4<img src="img/3.jpg" alt="" /></div>
+			<div>5<img src="img/4.jpg" alt="" /></div>
+			<div>6<img src="img/5.jpg" alt="" /></div>
+			
+		</div>
+		<script type="text/javascript">
+			var content=document.getElementById('content');
+			var divs=document.getElementsByTagName('div');
+			var num=0;
+			
+			document.onmousewheel=function(e){
+				num++;
+				content.style.transformOrigin='center center -125px';
+				content.style.transition='1s cubic-bezier(0.175, 0.885, 0.470, 1.515)';
+				if(e.wheelDelta<0){
+					content.style.transform='rotateX('+90*num+'deg)';
+				}else if(e.wheelDelta>0){
+					content.style.transform='rotateY('+90*num+'deg)';
+				}
+				
+				return false
+			}
+			
+		</script>
+	</body>
+</html>

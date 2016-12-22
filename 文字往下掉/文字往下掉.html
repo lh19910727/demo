@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box1,#box2{
+				width: 500px;
+				height: 200px;
+				border: 20px solid red;
+				padding: 10px;
+				position: relative;
+			}
+			
+			#box1 span{
+				position: absolute;
+				transition: 1s;
+			}
+			#content{
+				width: 400px;
+				text-align: center;
+				margin: 20px;
+			}
+			#content input{
+				width: 100px;
+				height: 30px;
+				color: black;
+				font-weight: bold;
+				font-size: 22px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box1"></div>
+		<div id="content">
+			<input type="button" name="down" id="down" value="↓" />
+			<input type="button" name="up" id="up" value="↑" />
+		</div>
+		
+		<div id="box2"></div>
+		<script type="text/javascript">
+			var box1=document.getElementById('box1');
+			var box2=document.getElementById('box2');
+			var down=document.getElementById('down');
+			var up=document.getElementById('up');
+			var str='浩瀚的宇宙，我们来过。在过去的一个多月时间里，两名航天员在地球低轨道上工作和生活。现在，带着满满的实验成果和一颗想家的心，他们要返航了。我又一次实现了穿越，进入到了神舟十一号的返回舱。马上要回家了，其实我的心情和航天员一样激动。就在17日上午，两名航天员关闭了“天宫二号”实验舱的前舱门，离开了这个他们生活了三十天的太空之家，回到了神舟十一号飞船，准备返航。那么返航的第一件事，是让飞船和天宫二号分开'
+			var num;
+			var num1;
+			var timer1;
+			var timer2;
+		console.log(str.length)
+		for(var i=0;i<str.length;i++){
+			var span=document.createElement('span');
+			box1.appendChild(span);
+			
+		}
+		var spans=document.getElementsByTagName('span');
+		for(var i=0;i<spans.length;i++){
+			spans[i].innerHTML=str.charAt(i);
+			spans[i].style.top=(10+Math.floor(i/25)*20)+'px';
+			spans[i].style.left=(10+(i%25)*20)+'px';
+		}
+		down.onclick=function(){
+					num=-1;
+					clearInterval(timer1)
+					timer1=setInterval(function(){
+						num++;
+						if(num==spans.length-1){
+							clearInterval(timer1);
+							
+						}
+						fn1();
+						
+					},50)
+					
+				}
+		up.onclick=function(){
+			 num1=-1;
+				clearInterval(timer2)
+					timer2=setInterval(function(){
+						num1++;
+						if(num1==spans.length-1){
+							clearInterval(timer2)
+						}
+						fn2();
+						
+					},50)
+					
+				}
+		function fn1(){
+				spans[num].style.top=(340+Math.floor(num/25)*20)+'px';
+				spans[num].style.left=(10+(num%25)*20)+'px';
+				spans[num].style.color='green';
+		}
+		
+		function fn2(){
+				spans[num1].style.top=(10+Math.floor(num1/25)*20)+'px';
+				spans[num1].style.left=(10+(num1%25)*20)+'px';
+				spans[num1].style.color='deepskyblue';
+			}	
+		</script>
+	</body>
+</html>

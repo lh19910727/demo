@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			/*html,body{
+				width: 100%;
+				height: 100%;
+			}*/
+			body{
+				background: darkcyan;
+				
+			}
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#content{
+				width: 300px;
+				height: 450px;
+				border-radius: 20px;
+				margin: 50px auto 0;
+				position: relative;
+				overflow: hidden;
+			}
+			#content div{
+				border-radius: 20px;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				transition:1s;
+				
+			}
+			#content div img{
+				border-radius: 20px;
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<div><img src="img/0.jpg" alt="" /></div>
+			<div><img src="img/1.jpg" alt="" /></div>
+			
+		</div>
+		<script type="text/javascript">
+			var content=document.getElementById('content');
+			var oDiv=content.getElementsByTagName('div');
+			var oImg=document.getElementsByTagName('img');
+			var num=0;
+			var arr=['img/0.jpg','img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg','img/6.jpg']
+			content.onmousewheel=function(e){
+				if(e.wheelDelta<0){
+					num++;
+					num%=arr.length;
+				}else if(e.wheelDelta>0){
+					num--;
+					if(num==-1){
+						num=arr.length-1;
+					}
+				}
+				console.log(num)
+				fn1()
+			}
+			function fn1(){
+				oDiv[1].style.opacity='0';
+				oDiv[1].style.width='600px';
+				oDiv[1].style.left='-150px';
+				oImg[0].src=arr[num];
+				setTimeout(function(){
+					oDiv[1].style.opacity='1';
+					oDiv[1].style.width='300px';
+					oDiv[1].style.left='0';
+					oImg[1].src=arr[num];
+				},500)
+			}
+		</script>
+	</body>
+</html>
